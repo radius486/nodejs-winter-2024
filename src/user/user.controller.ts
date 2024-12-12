@@ -6,6 +6,8 @@ import {
   Body,
   Put,
   Delete,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 
 import { GetUserByIdParams } from './params/get-user-by-id-params';
@@ -41,6 +43,7 @@ export class UserController {
   }
 
   @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
   deleteUserById(@Param() params: GetUserByIdParams) {
     return this.userService.deleteUserById(params.id);
   }
