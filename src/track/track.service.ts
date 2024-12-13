@@ -37,7 +37,12 @@ export class TrackService {
   }
 
   async createTrack(dto: CreateTrackDto) {
-    if (!dto.name || !dto.duration) {
+    if (
+      !dto.name ||
+      !dto.duration ||
+      dto.albumId === undefined ||
+      dto.artistId === undefined
+    ) {
       throw new HttpException(
         "request body does't contain required fields",
         HttpStatus.BAD_REQUEST,
@@ -65,7 +70,12 @@ export class TrackService {
       );
     }
 
-    if (!dto.name || !dto.duration) {
+    if (
+      !dto.name ||
+      !dto.duration ||
+      dto.albumId === undefined ||
+      dto.artistId === undefined
+    ) {
       throw new HttpException(
         "request body does't contain required fields",
         HttpStatus.BAD_REQUEST,
