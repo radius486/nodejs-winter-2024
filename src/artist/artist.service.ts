@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { mockedArtists } from 'mocks/artist-mocks';
 import * as uuid from 'uuid';
 import { CreateArtistDto } from './dto/create-artist-dto';
+import { mockedArtists } from 'mocks/artist-mocks';
 
 type Artist = {
   id: string;
