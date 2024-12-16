@@ -4,7 +4,7 @@ import { CreateArtistDto } from './dto/create-artist-dto';
 import { mockedArtists } from 'mocks/artist-mocks';
 import { ErrorMessages } from 'src/constants/error-messages';
 
-type Artist = {
+export type Artist = {
   id: string;
   name: string;
   grammy: boolean;

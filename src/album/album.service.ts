@@ -4,7 +4,7 @@ import { CreateAlbumDto } from './dto/create-album-dto';
 import { mockedAlbums } from 'mocks/album-mocks';
 import { ErrorMessages } from 'src/constants/error-messages';
 
-type Album = {
+export type Album = {
   id: string;
   name: string;
   year: number;

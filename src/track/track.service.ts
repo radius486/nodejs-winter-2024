@@ -4,7 +4,7 @@ import { CreateTrackDto } from './dto/create-track-dto';
 import { mockedTracks } from 'mocks/track-mocks';
 import { ErrorMessages } from 'src/constants/error-messages';
 
-type Track = {
+export type Track = {
   id: string;
   name: string;
   artistId: string | null;

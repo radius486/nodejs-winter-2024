@@ -6,4 +6,6 @@ export const enum ErrorMessages {
   shouldNotBeEmpty = 'should not be empty',
   shouldBeABoolean = 'should be a boolean',
   oldPasswordIsWrong = 'oldPassword is wrong',
+  isAlreadyInFavorites = 'is already in favorites',
+  notFoundInFavorites = 'not fount in favorites',
 }
