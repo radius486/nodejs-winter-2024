@@ -1,8 +1,12 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import * as uuid from 'uuid';
 import { CreateAlbumDto } from './dto/create-album-dto';
-import { mockedAlbums } from 'mocks/album-mocks';
 import { ErrorMessages } from 'src/constants/error-messages';
+import { Track } from 'src/track/track.service';
+import { Favorites } from 'src/favorites/favorites.service';
+import { mockedAlbums } from 'mocks/album-mocks';
+import { mockedFavorites } from 'mocks/favorites-mocks';
+import { mockedTracks } from 'mocks/track-mocks';
 
 export type Album = {
   id: string;
@@ -12,6 +16,8 @@ export type Album = {
 };
 
 const albums: Album[] = mockedAlbums;
+const tracks: Track[] = mockedTracks;
+const favorites: Favorites = mockedFavorites;
 
 @Injectable()
 export class AlbumService {
@@ -94,5 +100,17 @@ export class AlbumService {
     }
 
     albums.splice(index, 1);
+
+    const track = tracks.find((track) => track.albumId === id);
+
+    if (track) {
+      track.albumId = null;
+    }
+
+    const favoriteIndex = favorites.albums.indexOf(id);
+
+    if (favoriteIndex >= -1) {
+      favorites.albums.splice(favoriteIndex, 1);
+    }
   }
 }

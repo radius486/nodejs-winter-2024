@@ -9,7 +9,7 @@ import { mockedAlbums } from 'mocks/album-mocks';
 import { mockedTracks } from 'mocks/track-mocks';
 import { ErrorMessages } from 'src/constants/error-messages';
 
-type Favorites = {
+export type Favorites = {
   artists: string[];
   albums: string[];
   tracks: string[];

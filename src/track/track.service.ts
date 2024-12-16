@@ -1,8 +1,10 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import * as uuid from 'uuid';
 import { CreateTrackDto } from './dto/create-track-dto';
-import { mockedTracks } from 'mocks/track-mocks';
 import { ErrorMessages } from 'src/constants/error-messages';
+import { Favorites } from 'src/favorites/favorites.service';
+import { mockedTracks } from 'mocks/track-mocks';
+import { mockedFavorites } from 'mocks/favorites-mocks';
 
 export type Track = {
   id: string;
@@ -13,6 +15,7 @@ export type Track = {
 };
 
 const tracks: Track[] = mockedTracks;
+const favorites: Favorites = mockedFavorites;
 
 @Injectable()
 export class TrackService {
@@ -97,5 +100,11 @@ export class TrackService {
     }
 
     tracks.splice(index, 1);
+
+    const favoriteIndex = favorites.tracks.indexOf(id);
+
+    if (favoriteIndex >= -1) {
+      favorites.tracks.splice(favoriteIndex, 1);
+    }
   }
 }
