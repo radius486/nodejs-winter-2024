@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import * as uuid from 'uuid';
 import { CreateTrackDto } from './dto/create-track-dto';
 import { mockedTracks } from 'mocks/track-mocks';
+import { ErrorMessages } from 'src/constants/error-messages';
 
 type Track = {
   id: string;
@@ -22,7 +23,7 @@ export class TrackService {
   async getTrackById(id: string) {
     if (!uuid.validate(id)) {
       throw new HttpException(
-        'trackId is invalid (not uuid)',
+        `trackId ${ErrorMessages.isNotUuid}`,
         HttpStatus.BAD_REQUEST,
       );
     }
@@ -30,25 +31,16 @@ export class TrackService {
     const track = tracks.find((track) => track.id === id);
 
     if (!track) {
-      throw new HttpException("record does't exist", HttpStatus.NOT_FOUND);
+      throw new HttpException(
+        ErrorMessages.recordDoestExist,
+        HttpStatus.NOT_FOUND,
+      );
     }
 
     return track;
   }
 
   async createTrack(dto: CreateTrackDto) {
-    if (
-      !dto.name ||
-      !dto.duration ||
-      dto.albumId === undefined ||
-      dto.artistId === undefined
-    ) {
-      throw new HttpException(
-        "request body does't contain required fields",
-        HttpStatus.BAD_REQUEST,
-      );
-    }
-
     const track = {
       id: uuid.v4(),
       name: dto.name,
@@ -65,19 +57,7 @@ export class TrackService {
   async updateTrackInfo(id: string, dto: CreateTrackDto) {
     if (!uuid.validate(id)) {
       throw new HttpException(
-        'trackId is invalid (not uuid)',
-        HttpStatus.BAD_REQUEST,
-      );
-    }
-
-    if (
-      !dto.name ||
-      !dto.duration ||
-      dto.albumId === undefined ||
-      dto.artistId === undefined
-    ) {
-      throw new HttpException(
-        "request body does't contain required fields",
+        `trackId ${ErrorMessages.isNotUuid}`,
         HttpStatus.BAD_REQUEST,
       );
     }
@@ -85,7 +65,10 @@ export class TrackService {
     const track = tracks.find((track) => track.id === id);
 
     if (!track) {
-      throw new HttpException("record does't exist", HttpStatus.NOT_FOUND);
+      throw new HttpException(
+        ErrorMessages.recordDoestExist,
+        HttpStatus.NOT_FOUND,
+      );
     }
 
     track.name = dto.name;
@@ -99,7 +82,7 @@ export class TrackService {
   async deleteTrackById(id: string) {
     if (!uuid.validate(id)) {
       throw new HttpException(
-        'trackId is invalid (not uuid)',
+        `trackId ${ErrorMessages.isNotUuid}`,
         HttpStatus.BAD_REQUEST,
       );
     }
@@ -107,7 +90,10 @@ export class TrackService {
     const index = tracks.findIndex((track) => track.id === id);
 
     if (index === -1) {
-      throw new HttpException("record does't exist", HttpStatus.NOT_FOUND);
+      throw new HttpException(
+        ErrorMessages.recordDoestExist,
+        HttpStatus.NOT_FOUND,
+      );
     }
 
     tracks.splice(index, 1);

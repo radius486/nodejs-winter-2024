@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import * as uuid from 'uuid';
 import { CreateArtistDto } from './dto/create-artist-dto';
 import { mockedArtists } from 'mocks/artist-mocks';
+import { ErrorMessages } from 'src/constants/error-messages';
 
 type Artist = {
   id: string;
@@ -10,10 +11,6 @@ type Artist = {
 };
 
 const artists: Artist[] = mockedArtists;
-
-function isBoolean(value: unknown) {
-  return typeof value === 'boolean';
-}
 
 @Injectable()
 export class ArtistService {
@@ -24,7 +21,7 @@ export class ArtistService {
   async getArtistById(id: string) {
     if (!uuid.validate(id)) {
       throw new HttpException(
-        'artistId is invalid (not uuid)',
+        `artistId ${ErrorMessages.isNotUuid}`,
         HttpStatus.BAD_REQUEST,
       );
     }
@@ -32,20 +29,16 @@ export class ArtistService {
     const artist = artists.find((artist) => artist.id === id);
 
     if (!artist) {
-      throw new HttpException("record does't exist", HttpStatus.NOT_FOUND);
+      throw new HttpException(
+        ErrorMessages.recordDoestExist,
+        HttpStatus.NOT_FOUND,
+      );
     }
 
     return artist;
   }
 
   async createArtist(dto: CreateArtistDto) {
-    if (!dto.name || !isBoolean(dto.grammy)) {
-      throw new HttpException(
-        "request body does't contain required fields",
-        HttpStatus.BAD_REQUEST,
-      );
-    }
-
     const artist = {
       id: uuid.v4(),
       name: dto.name,
@@ -60,14 +53,7 @@ export class ArtistService {
   async updateArtistInfo(id: string, dto: CreateArtistDto) {
     if (!uuid.validate(id)) {
       throw new HttpException(
-        'artistId is invalid (not uuid)',
-        HttpStatus.BAD_REQUEST,
-      );
-    }
-
-    if (!dto.name || !isBoolean(dto.grammy)) {
-      throw new HttpException(
-        "request body does't contain required fields",
+        `artistId ${ErrorMessages.isNotUuid}`,
         HttpStatus.BAD_REQUEST,
       );
     }
@@ -75,7 +61,10 @@ export class ArtistService {
     const artist = artists.find((artist) => artist.id === id);
 
     if (!artist) {
-      throw new HttpException("record does't exist", HttpStatus.NOT_FOUND);
+      throw new HttpException(
+        ErrorMessages.recordDoestExist,
+        HttpStatus.NOT_FOUND,
+      );
     }
 
     artist.name = dto.name;
@@ -87,7 +76,7 @@ export class ArtistService {
   async deleteArtistById(id: string) {
     if (!uuid.validate(id)) {
       throw new HttpException(
-        'artistId is invalid (not uuid)',
+        `artistId ${ErrorMessages.isNotUuid}`,
         HttpStatus.BAD_REQUEST,
       );
     }
@@ -95,7 +84,10 @@ export class ArtistService {
     const index = artists.findIndex((artist) => artist.id === id);
 
     if (index === -1) {
-      throw new HttpException("record does't exist", HttpStatus.NOT_FOUND);
+      throw new HttpException(
+        ErrorMessages.recordDoestExist,
+        HttpStatus.NOT_FOUND,
+      );
     }
 
     artists.splice(index, 1);

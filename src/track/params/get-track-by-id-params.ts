@@ -1,3 +1,3 @@
-export type GetTrackByIdParams = {
-  id: string;
-};
+export class GetTrackByIdParams {
+  readonly id: string;
+}

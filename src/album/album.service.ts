@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import * as uuid from 'uuid';
 import { CreateAlbumDto } from './dto/create-album-dto';
 import { mockedAlbums } from 'mocks/album-mocks';
+import { ErrorMessages } from 'src/constants/error-messages';
 
 type Album = {
   id: string;
@@ -21,7 +22,7 @@ export class AlbumService {
   async getAlbumById(id: string) {
     if (!uuid.validate(id)) {
       throw new HttpException(
-        'albumId is invalid (not uuid)',
+        `albumId ${ErrorMessages.isNotUuid}`,
         HttpStatus.BAD_REQUEST,
       );
     }
@@ -29,20 +30,16 @@ export class AlbumService {
     const album = albums.find((album) => album.id === id);
 
     if (!album) {
-      throw new HttpException("record does't exist", HttpStatus.NOT_FOUND);
+      throw new HttpException(
+        ErrorMessages.recordDoestExist,
+        HttpStatus.NOT_FOUND,
+      );
     }
 
     return album;
   }
 
   async createAlbum(dto: CreateAlbumDto) {
-    if (!dto.name || !dto.year || dto.artistId === undefined) {
-      throw new HttpException(
-        "request body does't contain required fields",
-        HttpStatus.BAD_REQUEST,
-      );
-    }
-
     const album = {
       id: uuid.v4(),
       name: dto.name,
@@ -58,14 +55,7 @@ export class AlbumService {
   async updateAlbumInfo(id: string, dto: CreateAlbumDto) {
     if (!uuid.validate(id)) {
       throw new HttpException(
-        'albumId is invalid (not uuid)',
-        HttpStatus.BAD_REQUEST,
-      );
-    }
-
-    if (!dto.name || !dto.year || dto.artistId === undefined) {
-      throw new HttpException(
-        "request body does't contain required fields",
+        `albumId ${ErrorMessages.isNotUuid}`,
         HttpStatus.BAD_REQUEST,
       );
     }
@@ -73,7 +63,10 @@ export class AlbumService {
     const album = albums.find((album) => album.id === id);
 
     if (!album) {
-      throw new HttpException("record does't exist", HttpStatus.NOT_FOUND);
+      throw new HttpException(
+        ErrorMessages.recordDoestExist,
+        HttpStatus.NOT_FOUND,
+      );
     }
 
     album.name = dto.name;
@@ -86,7 +79,7 @@ export class AlbumService {
   async deleteAlbumById(id: string) {
     if (!uuid.validate(id)) {
       throw new HttpException(
-        'albumId is invalid (not uuid)',
+        `albumId ${ErrorMessages.isNotUuid}`,
         HttpStatus.BAD_REQUEST,
       );
     }
@@ -94,7 +87,10 @@ export class AlbumService {
     const index = albums.findIndex((album) => album.id === id);
 
     if (index === -1) {
-      throw new HttpException("record does't exist", HttpStatus.NOT_FOUND);
+      throw new HttpException(
+        ErrorMessages.recordDoestExist,
+        HttpStatus.NOT_FOUND,
+      );
     }
 
     albums.splice(index, 1);

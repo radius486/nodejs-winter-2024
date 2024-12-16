@@ -1,3 +1,3 @@
-export type GetUserByIdParams = {
-  id: string;
-};
+export class GetUserByIdParams {
+  readonly id: string;
+}

@@ -1,3 +1,3 @@
-export type GetAlbumByIdParams = {
-  id: string;
-};
+export class GetAlbumByIdParams {
+  readonly id: string;
+}

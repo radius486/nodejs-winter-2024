@@ -1,3 +1,3 @@
-export type GetArtistByIdParams = {
-  id: string;
-};
+export class GetArtistByIdParams {
+  readonly id: string;
+}
