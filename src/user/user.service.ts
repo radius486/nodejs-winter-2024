@@ -5,7 +5,7 @@ import { mockedUsers } from 'mocks/user-mocks';
 import * as uuid from 'uuid';
 import { ErrorMessages } from 'src/constants/error-messages';
 
-type User = {
+export type User = {
   id: string;
   login: string;
   password: string;
