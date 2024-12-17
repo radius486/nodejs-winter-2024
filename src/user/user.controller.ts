@@ -89,7 +89,7 @@ export class UserController {
     return this.userService.updateUserPassword(params.id, passwordDto);
   }
 
-  @ApiOperation({ summary: 'Delete existing user by id' })
+  @ApiOperation({ summary: 'Remove existing user by id' })
   @ApiParam({ name: 'id', example: 'b2a93819-d28c-465c-9402-a612fec77f85' })
   @ApiResponse({ status: 204 })
   @Delete(':id')
