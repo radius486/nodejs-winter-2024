@@ -21,12 +21,7 @@ import {
 import { ArtistService } from './artist.service';
 import { GetArtistByIdParams } from './params/get-artist-by-id-params';
 import { CreateArtistDto } from './dto/create-artist-dto';
-
-const artistExample = {
-  id: '8f86d9c4-b057-47d2-aaf7-66c9945877e6',
-  name: 'Artist 1',
-  grammy: true,
-};
+import { artistExample } from 'src/examples/open-api-examples';
 
 @ApiTags('Artists')
 @Controller('artist')

@@ -21,13 +21,7 @@ import {
 import { AlbumService } from './album.service';
 import { GetAlbumByIdParams } from './params/get-album-by-id-params';
 import { CreateAlbumDto } from './dto/create-album-dto';
-
-const albumExample = {
-  id: '495b9ffb-687b-401a-9b10-a1a764e9deca',
-  name: 'Album 1',
-  year: 2023,
-  artistId: null,
-};
+import { albumExample } from 'src/examples/open-api-examples';
 
 @ApiTags('Albums')
 @Controller('album')

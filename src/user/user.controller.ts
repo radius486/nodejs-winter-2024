@@ -22,14 +22,7 @@ import { GetUserByIdParams } from './params/get-user-by-id-params';
 import { CreateUserDto } from './dto/create-user-dto';
 import { UpdatePasswordDto } from './dto/update-password-dto';
 import { UserService } from './user.service';
-
-const userExample = {
-  id: 'b2a93819-d28c-465c-9402-a612fec77f85',
-  login: 'user_1',
-  version: 1,
-  createdAt: 1733915529813,
-  updatedAt: 1733915529813,
-};
+import { userExample } from 'src/examples/open-api-examples';
 
 @ApiTags('Users')
 @Controller('user')

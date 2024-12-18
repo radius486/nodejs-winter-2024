@@ -21,14 +21,7 @@ import {
 import { TrackService } from './track.service';
 import { GetTrackByIdParams } from './params/get-track-by-id-params';
 import { CreateTrackDto } from './dto/create-track-dto';
-
-const trackExample = {
-  id: '6cd3cdca-b31e-4911-8c22-9d08c42b01b4',
-  name: 'Track 1',
-  artistId: null,
-  albumId: null,
-  duration: 30,
-};
+import { trackExample } from 'src/examples/open-api-examples';
 
 @ApiTags('Tracks')
 @Controller('track')
