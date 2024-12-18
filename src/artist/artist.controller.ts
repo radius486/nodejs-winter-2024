@@ -45,16 +45,6 @@ export class ArtistController {
 
   @ApiOperation({ summary: 'Create new artist' })
   @ApiResponse({ status: 201, example: artistExample })
-  @ApiBody({
-    schema: {
-      type: 'object',
-      required: ['name', 'grammy'],
-      properties: {
-        name: { type: 'string', example: 'Artist 4' },
-        grammy: { type: 'string', example: true },
-      },
-    },
-  })
   @Post()
   createArtist(@Body() artistDto: CreateArtistDto) {
     return this.artistService.createArtist(artistDto);

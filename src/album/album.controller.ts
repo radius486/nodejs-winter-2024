@@ -44,17 +44,6 @@ export class AlbumController {
   }
 
   @ApiOperation({ summary: 'Create new album' })
-  @ApiBody({
-    schema: {
-      type: 'object',
-      required: ['name', 'year'],
-      properties: {
-        name: { type: 'string', example: 'Album 3' },
-        year: { type: 'number', example: 2024 },
-        artistId: { type: 'string | null', example: null },
-      },
-    },
-  })
   @ApiResponse({ status: 201, example: albumExample })
   @Post()
   createAlbum(@Body() albumDto: CreateAlbumDto) {

@@ -44,18 +44,6 @@ export class TrackController {
   }
 
   @ApiOperation({ summary: 'Create new track' })
-  @ApiBody({
-    schema: {
-      type: 'object',
-      required: ['name', 'duration'],
-      properties: {
-        name: { type: 'string', example: 'Track 4' },
-        artistId: { type: 'string | null', example: null },
-        albumId: { type: 'string | null', example: null },
-        duration: { type: 'number', example: 80 },
-      },
-    },
-  })
   @ApiResponse({ status: 201, example: trackExample })
   @Post()
   createTrack(@Body() trackDto: CreateTrackDto) {
