@@ -66,14 +66,7 @@ export class AlbumService {
       );
     }
 
-    const album = albums.find((album) => album.id === id);
-
-    if (!album) {
-      throw new HttpException(
-        ErrorMessages.recordDoestExist,
-        HttpStatus.NOT_FOUND,
-      );
-    }
+    const album = await this.getAlbumById(id);
 
     album.name = dto.name;
     album.year = dto.year;

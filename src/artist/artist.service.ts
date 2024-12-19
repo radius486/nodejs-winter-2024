@@ -67,14 +67,7 @@ export class ArtistService {
       );
     }
 
-    const artist = artists.find((artist) => artist.id === id);
-
-    if (!artist) {
-      throw new HttpException(
-        ErrorMessages.recordDoestExist,
-        HttpStatus.NOT_FOUND,
-      );
-    }
+    const artist = await this.getArtistById(id);
 
     artist.name = dto.name;
     artist.grammy = dto.grammy;

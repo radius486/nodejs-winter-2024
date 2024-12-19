@@ -65,14 +65,7 @@ export class TrackService {
       );
     }
 
-    const track = tracks.find((track) => track.id === id);
-
-    if (!track) {
-      throw new HttpException(
-        ErrorMessages.recordDoestExist,
-        HttpStatus.NOT_FOUND,
-      );
-    }
+    const track = await this.getTrackById(id);
 
     track.name = dto.name;
     track.duration = dto.duration;

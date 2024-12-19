@@ -1,8 +1,8 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import * as uuid from 'uuid';
-import { Album } from 'src/album/album.service';
-import { Artist } from 'src/artist/artist.service';
-import { Track } from 'src/track/track.service';
+import { Album, AlbumService } from 'src/album/album.service';
+import { Artist, ArtistService } from 'src/artist/artist.service';
+import { Track, TrackService } from 'src/track/track.service';
 import { mockedFavorites } from 'mocks/favorites-mocks';
 import { mockedArtists } from 'mocks/artist-mocks';
 import { mockedAlbums } from 'mocks/album-mocks';
@@ -28,6 +28,12 @@ const tracks: Track[] = mockedTracks;
 
 @Injectable()
 export class FavoritesService {
+  constructor(
+    private artistService: ArtistService,
+    private albumService: AlbumService,
+    private trackService: TrackService,
+  ) {}
+
   async getAllFavorites() {
     const response: FavoritesResponse = {
       artists: [],
@@ -53,9 +59,11 @@ export class FavoritesService {
       );
     }
 
-    const track = tracks.find((track) => track.id === id);
+    let track: Track;
 
-    if (!track) {
+    try {
+      track = await this.trackService.getTrackById(id);
+    } catch (error) {
       throw new HttpException(
         ErrorMessages.recordDoestExist,
         HttpStatus.UNPROCESSABLE_ENTITY,
@@ -102,9 +110,11 @@ export class FavoritesService {
       );
     }
 
-    const album = albums.find((album) => album.id === id);
+    let album: Album;
 
-    if (!album) {
+    try {
+      album = await this.albumService.getAlbumById(id);
+    } catch (error) {
       throw new HttpException(
         ErrorMessages.recordDoestExist,
         HttpStatus.UNPROCESSABLE_ENTITY,
@@ -151,9 +161,11 @@ export class FavoritesService {
       );
     }
 
-    const artist = artists.find((artist) => artist.id === id);
+    let artist: Artist;
 
-    if (!artist) {
+    try {
+      artist = await this.artistService.getArtistById(id);
+    } catch (error) {
       throw new HttpException(
         ErrorMessages.recordDoestExist,
         HttpStatus.UNPROCESSABLE_ENTITY,

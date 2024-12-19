@@ -8,7 +8,7 @@ import { ErrorMessages } from 'src/constants/error-messages';
 export type User = {
   id: string;
   login: string;
-  password: string;
+  password?: string;
   version: number;
   createdAt: number;
   updatedAt: number;
@@ -30,7 +30,7 @@ export class UserService {
     });
   }
 
-  async getUserById(id: string) {
+  async getUserById(id: string, withPass = false): Promise<User> {
     if (!uuid.validate(id)) {
       throw new HttpException(
         `userId ${ErrorMessages.isNotUuid}`,
@@ -47,7 +47,7 @@ export class UserService {
       );
     }
 
-    return excludePassword(user);
+    return withPass ? user : excludePassword(user);
   }
 
   async createUser(dto: CreateUserDto) {
@@ -73,14 +73,7 @@ export class UserService {
       );
     }
 
-    const user = users.find((user) => user.id === id);
-
-    if (!user) {
-      throw new HttpException(
-        ErrorMessages.recordDoestExist,
-        HttpStatus.NOT_FOUND,
-      );
-    }
+    const user = await this.getUserById(id, true);
 
     if (user.password !== dto.oldPassword) {
       throw new HttpException(
