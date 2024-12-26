@@ -2,7 +2,7 @@ import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user-dto';
 import { UpdatePasswordDto } from './dto/update-password-dto';
 import * as uuid from 'uuid';
-import { ErrorMessages } from 'src/constants/error-messages';
+import { ErrorMessages } from 'src/common/constants/error-messages';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 export type User = {
@@ -23,13 +23,6 @@ export class UserService {
   }
 
   async getUserById(id: string, withPass = false): Promise<User> {
-    if (!uuid.validate(id)) {
-      throw new HttpException(
-        `userId ${ErrorMessages.isNotUuid}`,
-        HttpStatus.BAD_REQUEST,
-      );
-    }
-
     const user = await this.prisma.user.findUnique({
       where: { id },
       omit: {
@@ -72,13 +65,6 @@ export class UserService {
   }
 
   async updateUserPassword(id: string, dto: UpdatePasswordDto) {
-    if (!uuid.validate(id)) {
-      throw new HttpException(
-        `userId ${ErrorMessages.isNotUuid}`,
-        HttpStatus.BAD_REQUEST,
-      );
-    }
-
     const user = await this.getUserById(id, true);
 
     if (user.password !== dto.oldPassword) {
@@ -102,13 +88,6 @@ export class UserService {
   }
 
   async deleteUserById(id: string) {
-    if (!uuid.validate(id)) {
-      throw new HttpException(
-        `userId ${ErrorMessages.isNotUuid}`,
-        HttpStatus.BAD_REQUEST,
-      );
-    }
-
     await this.getUserById(id);
     await this.prisma.user.delete({ where: { id } });
   }

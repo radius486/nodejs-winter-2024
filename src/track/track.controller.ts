@@ -21,7 +21,7 @@ import {
 import { TrackService } from './track.service';
 import { GetTrackByIdParams } from './params/get-track-by-id-params';
 import { CreateTrackDto } from './dto/create-track-dto';
-import { trackExample } from 'src/examples/open-api-examples';
+import { trackExample } from 'src/common/examples/open-api-examples';
 
 @ApiTags('Tracks')
 @Controller('track')

@@ -19,7 +19,7 @@ import {
   artistExample,
   favoritesExample,
   trackExample,
-} from 'src/examples/open-api-examples';
+} from 'src/common/examples/open-api-examples';
 
 @ApiTags('Favorites')
 @Controller('favs')

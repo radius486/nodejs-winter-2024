@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import * as uuid from 'uuid';
 import { CreateTrackDto } from './dto/create-track-dto';
-import { ErrorMessages } from 'src/constants/error-messages';
+import { ErrorMessages } from 'src/common/constants/error-messages';
 import { Favorites } from 'src/favorites/favorites.service';
 import { mockedTracks } from 'mocks/track-mocks';
 import { mockedFavorites } from 'mocks/favorites-mocks';

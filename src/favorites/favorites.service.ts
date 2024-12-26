@@ -7,7 +7,7 @@ import { mockedFavorites } from 'mocks/favorites-mocks';
 import { mockedArtists } from 'mocks/artist-mocks';
 import { mockedAlbums } from 'mocks/album-mocks';
 import { mockedTracks } from 'mocks/track-mocks';
-import { ErrorMessages } from 'src/constants/error-messages';
+import { ErrorMessages } from 'src/common/constants/error-messages';
 
 export type Favorites = {
   artists: string[];

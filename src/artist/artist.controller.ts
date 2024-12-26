@@ -21,7 +21,7 @@ import {
 import { ArtistService } from './artist.service';
 import { GetArtistByIdParams } from './params/get-artist-by-id-params';
 import { CreateArtistDto } from './dto/create-artist-dto';
-import { artistExample } from 'src/examples/open-api-examples';
+import { artistExample } from 'src/common/examples/open-api-examples';
 
 @ApiTags('Artists')
 @Controller('artist')

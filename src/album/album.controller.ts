@@ -21,7 +21,7 @@ import {
 import { AlbumService } from './album.service';
 import { GetAlbumByIdParams } from './params/get-album-by-id-params';
 import { CreateAlbumDto } from './dto/create-album-dto';
-import { albumExample } from 'src/examples/open-api-examples';
+import { albumExample } from 'src/common/examples/open-api-examples';
 
 @ApiTags('Albums')
 @Controller('album')

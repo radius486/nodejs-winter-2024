@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import * as uuid from 'uuid';
 import { CreateAlbumDto } from './dto/create-album-dto';
-import { ErrorMessages } from 'src/constants/error-messages';
+import { ErrorMessages } from 'src/common/constants/error-messages';
 import { Track } from 'src/track/track.service';
 import { Favorites } from 'src/favorites/favorites.service';
 import { mockedAlbums } from 'mocks/album-mocks';
