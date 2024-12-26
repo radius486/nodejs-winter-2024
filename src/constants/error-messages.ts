@@ -8,4 +8,5 @@ export const enum ErrorMessages {
   oldPasswordIsWrong = 'oldPassword is wrong',
   isAlreadyInFavorites = 'is already in favorites',
   notFoundInFavorites = 'not fount in favorites',
+  userAlreadyExists = 'user with such login already exists',
 }

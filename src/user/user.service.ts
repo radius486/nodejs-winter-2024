@@ -1,33 +1,25 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user-dto';
 import { UpdatePasswordDto } from './dto/update-password-dto';
-import { mockedUsers } from 'mocks/user-mocks';
 import * as uuid from 'uuid';
 import { ErrorMessages } from 'src/constants/error-messages';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 export type User = {
   id: string;
   login: string;
   password?: string;
   version: number;
-  createdAt: number;
-  updatedAt: number;
+  createdAt: number | bigint;
+  updatedAt: number | bigint;
 };
-
-const users: User[] = mockedUsers;
-
-function excludePassword(user: User) {
-  const { id, login, version, createdAt, updatedAt } = user;
-
-  return { id, login, version, createdAt, updatedAt };
-}
 
 @Injectable()
 export class UserService {
+  constructor(private prisma: PrismaService) {}
+
   async getAllUsers() {
-    return users.map((user) => {
-      return excludePassword(user);
-    });
+    return await this.prisma.user.findMany({ omit: { password: true } });
   }
 
   async getUserById(id: string, withPass = false): Promise<User> {
@@ -38,7 +30,12 @@ export class UserService {
       );
     }
 
-    const user = users.find((user) => user.id === id);
+    const user = await this.prisma.user.findUnique({
+      where: { id },
+      omit: {
+        password: !withPass,
+      },
+    });
 
     if (!user) {
       throw new HttpException(
@@ -47,11 +44,11 @@ export class UserService {
       );
     }
 
-    return withPass ? user : excludePassword(user);
+    return user;
   }
 
   async createUser(dto: CreateUserDto) {
-    const user = {
+    const data = {
       id: uuid.v4(),
       login: dto.login,
       password: dto.password,
@@ -60,9 +57,18 @@ export class UserService {
       updatedAt: new Date().getTime(),
     };
 
-    users.push(user);
+    const existedUser = await this.prisma.user.findUnique({
+      where: { login: dto.login },
+    });
 
-    return excludePassword(user);
+    if (existedUser) {
+      throw new HttpException(
+        ErrorMessages.userAlreadyExists,
+        HttpStatus.CONFLICT,
+      );
+    }
+
+    return this.prisma.user.create({ data, omit: { password: true } });
   }
 
   async updateUserPassword(id: string, dto: UpdatePasswordDto) {
@@ -82,11 +88,17 @@ export class UserService {
       );
     }
 
-    user.password = dto.newPassword;
-    user.version++;
-    user.updatedAt = new Date().getTime();
-
-    return excludePassword(user);
+    return await this.prisma.user.update({
+      where: { id },
+      data: {
+        password: dto.newPassword,
+        version: ++user.version,
+        updatedAt: new Date().getTime(),
+      },
+      omit: {
+        password: true,
+      },
+    });
   }
 
   async deleteUserById(id: string) {
@@ -97,15 +109,7 @@ export class UserService {
       );
     }
 
-    const index = users.findIndex((user) => user.id === id);
-
-    if (index === -1) {
-      throw new HttpException(
-        ErrorMessages.recordDoestExist,
-        HttpStatus.NOT_FOUND,
-      );
-    }
-
-    users.splice(index, 1);
+    await this.getUserById(id);
+    await this.prisma.user.delete({ where: { id } });
   }
 }
