@@ -78,6 +78,31 @@ async function main() {
   });
 
   console.log({ artist1, artist2, artist3 });
+
+  // create three dummy albums
+  const album1 = await prisma.album.upsert({
+    where: { id: '495b9ffb-687b-401a-9b10-a1a764e9deca' },
+    update: {},
+    create: {
+      id: '495b9ffb-687b-401a-9b10-a1a764e9deca',
+      name: 'Album 1',
+      year: 2023,
+      artistId: null,
+    },
+  });
+
+  const album2 = await prisma.album.upsert({
+    where: { id: '0b7f1be2-cd52-4643-8aef-8740b221dc81' },
+    update: {},
+    create: {
+      id: '0b7f1be2-cd52-4643-8aef-8740b221dc81',
+      name: 'Album 2',
+      year: 2024,
+      artistId: null,
+    },
+  });
+
+  console.log({ album1, album2 });
 }
 
 // execute the main function
