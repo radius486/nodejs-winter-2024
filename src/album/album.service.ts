@@ -2,11 +2,6 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import * as uuid from 'uuid';
 import { CreateAlbumDto } from './dto/create-album-dto';
 import { ErrorMessages } from 'src/common/constants/error-messages';
-import { Track } from 'src/track/track.service';
-import { Favorites } from 'src/favorites/favorites.service';
-import { mockedAlbums } from 'mocks/album-mocks';
-import { mockedFavorites } from 'mocks/favorites-mocks';
-import { mockedTracks } from 'mocks/track-mocks';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 export type Album = {
@@ -21,7 +16,7 @@ export class AlbumService {
   constructor(private prisma: PrismaService) {}
 
   async getAllAlbums() {
-    return this.prisma.album.findMany();
+    return await this.prisma.album.findMany();
   }
 
   async getAlbumById(id: string) {

@@ -103,6 +103,45 @@ async function main() {
   });
 
   console.log({ album1, album2 });
+
+  // create three dummy albums
+  const track1 = await prisma.track.upsert({
+    where: { id: '6cd3cdca-b31e-4911-8c22-9d08c42b01b4' },
+    update: {},
+    create: {
+      id: '6cd3cdca-b31e-4911-8c22-9d08c42b01b4',
+      name: 'Track 1',
+      albumId: null,
+      artistId: null,
+      duration: 30,
+    },
+  });
+
+  const track2 = await prisma.track.upsert({
+    where: { id: '66b3d77f-6238-4f2d-ba6f-b3697e03b5aa' },
+    update: {},
+    create: {
+      id: '66b3d77f-6238-4f2d-ba6f-b3697e03b5aa',
+      name: 'Track 2',
+      albumId: null,
+      artistId: null,
+      duration: 90,
+    },
+  });
+
+  const track3 = await prisma.track.upsert({
+    where: { id: '283f7740-15b9-48af-b8d1-aa9dc39af8af' },
+    update: {},
+    create: {
+      id: '283f7740-15b9-48af-b8d1-aa9dc39af8af',
+      name: 'Track 3',
+      albumId: null,
+      artistId: null,
+      duration: 60,
+    },
+  });
+
+  console.log({ track1, track2, track3 });
 }
 
 // execute the main function

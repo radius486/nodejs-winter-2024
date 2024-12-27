@@ -15,7 +15,7 @@ export class ArtistService {
   constructor(private prisma: PrismaService) {}
 
   async getAllArtists() {
-    return this.prisma.artist.findMany();
+    return await this.prisma.artist.findMany();
   }
 
   async getArtistById(id: string) {

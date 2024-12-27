@@ -61,7 +61,7 @@ export class UserService {
       updatedAt: new Date().getTime(),
     };
 
-    return this.prisma.user.create({ data, omit: { password: true } });
+    return await this.prisma.user.create({ data, omit: { password: true } });
   }
 
   async updateUserPassword(id: string, dto: UpdatePasswordDto) {
