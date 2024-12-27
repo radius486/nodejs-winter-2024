@@ -15,15 +15,40 @@ datasource db {
 }
 
 model User {
-  id        String   @id @unique
-  login     String   @unique
-  password  String
-  version   Int
-  createdAt BigInt
-  updatedAt BigInt
+  id         String @id @unique
+  login      String @unique
+  password   String
+  version    Int
+  createdAt  BigInt
+  updatedAt  BigInt
 }
 
-enum Role {
-  USER
-  ADMIN
+model Artist {
+  id         String @id @unique
+  name       String
+  grammy     Boolean
+
+  Track Track[]
+
+  Album Album[]
+}
+
+model Track {
+  id         String @id @unique
+  name       String
+  artist     Artist? @relation(fields: [artistId], references: [id], onDelete: SetNull)
+  artistId   String?
+  album      Album? @relation(fields: [albumId], references: [id], onDelete: SetNull)
+  albumId    String?
+  duration   Int
+}
+
+model Album {
+  id         String @id @unique
+  name       String
+  year       Int
+  artist     Artist? @relation(fields: [artistId], references: [id], onDelete: SetNull)
+  artistId   String?
+
+  Track Track[]
 }

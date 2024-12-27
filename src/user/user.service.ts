@@ -8,7 +8,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export type User = {
   id: string;
   login: string;
-  password?: string;
+  password: string;
   version: number;
   createdAt: number | bigint;
   updatedAt: number | bigint;
@@ -41,15 +41,6 @@ export class UserService {
   }
 
   async createUser(dto: CreateUserDto) {
-    const data = {
-      id: uuid.v4(),
-      login: dto.login,
-      password: dto.password,
-      version: 1,
-      createdAt: new Date().getTime(),
-      updatedAt: new Date().getTime(),
-    };
-
     const existedUser = await this.prisma.user.findUnique({
       where: { login: dto.login },
     });
@@ -60,6 +51,15 @@ export class UserService {
         HttpStatus.CONFLICT,
       );
     }
+
+    const data = {
+      id: uuid.v4(),
+      login: dto.login,
+      password: dto.password,
+      version: 1,
+      createdAt: new Date().getTime(),
+      updatedAt: new Date().getTime(),
+    };
 
     return this.prisma.user.create({ data, omit: { password: true } });
   }
