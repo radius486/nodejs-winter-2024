@@ -9,4 +9,5 @@ export const enum ErrorMessages {
   isAlreadyInFavorites = 'is already in favorites',
   notFoundInFavorites = 'not fount in favorites',
   userAlreadyExists = 'user with such login already exists',
+  somethingWentWrong = 'something went wrong',
 }
