@@ -3,17 +3,22 @@ services:
     container_name: nestjs_api
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.api
+    depends_on:
+      - nestjs_postgres
     ports:
       - '4000:4000'
     env_file:
       - .env
     volumes:
       - ./src:/app/src
+    restart: always
 
   nestjs_postgres:
     container_name: nestjs_postgres
-    image: postgres:16
+    build:
+      context: .
+      dockerfile: Dockerfile.postgres
     env_file:
       - .env
     environment:
