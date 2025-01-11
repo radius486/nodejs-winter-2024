@@ -8,6 +8,7 @@ services:
       - nestjs_postgres
     ports:
       - '4000:4000'
+    command: npm run start:migrate:dev
     env_file:
       - .env
     volumes:
@@ -25,6 +26,7 @@ services:
       PG_DATA: /var/lib/postgresql/data
     ports:
       - 5432:5432
+      - 5433:5432
     volumes:
       - pgdata:/var/lib/postgresql/data
     restart: always

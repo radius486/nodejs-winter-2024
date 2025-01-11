@@ -14,13 +14,7 @@ git clone {repository URL}
 ## Running application inside docker container with postgres DB
 
 ```
-docker-compose up --build
-```
-After starting the app inside docker please run next two commands for db migrations inside nestjs_api docker container
-
-```
-npm run migrate
-npm run seed
+docker-compose up
 ```
 
 After starting the app on port (4000 as default) you can open
