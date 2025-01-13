@@ -46,6 +46,7 @@ export class FavoritesService {
 
     try {
       track = await this.trackService.getTrackById(id);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       throw new HttpException(
         ErrorMessages.recordDoestExist,
@@ -95,6 +96,7 @@ export class FavoritesService {
 
     try {
       album = await this.albumService.getAlbumById(id);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       throw new HttpException(
         ErrorMessages.recordDoestExist,
@@ -144,6 +146,7 @@ export class FavoritesService {
 
     try {
       artist = await this.artistService.getArtistById(id);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       throw new HttpException(
         ErrorMessages.recordDoestExist,
